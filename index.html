@@ -42,6 +42,7 @@ header { border-bottom: 1px solid var(--line); }
 .post-list { padding-bottom: 60px; }
 .post-row { display: grid; grid-template-columns: 150px 1fr auto; gap: 24px; align-items: start; padding: 26px 0; border-bottom: 1px solid var(--line); }
 .post-row:first-child { border-top: 1px solid var(--line); }
+.post-row:last-child { border-bottom: none; }
 .post-date { font-family: 'Space Mono', monospace; font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink-faint); padding-top: 6px; }
 .post-row-title { font-family: 'Playfair Display', Georgia, serif; font-weight: 700; font-size: 24px; margin: 0 0 8px; }
 .post-row-title a:hover { color: var(--accent); }
@@ -63,15 +64,13 @@ header { border-bottom: 1px solid var(--line); }
 .post-title-underline { width: 56px; height: 3px; background: var(--accent); border: none; margin: 0 0 36px; }
 .post-divider { border: none; border-top: 1px solid var(--line); margin: 0 0 36px; }
 .post-body p { font-size: 18px; line-height: 1.8; margin: 0 0 24px; max-width: 62ch; }
-.post-nav { display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--line); padding-top: 26px; margin-top: 40px; font-family: 'Space Mono', monospace; font-size: 14px; font-weight: 700; color: var(--accent); }
+.post-nav { display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--line); padding: 26px 0; margin-top: 40px; font-family: 'Space Mono', monospace; font-size: 14px; font-weight: 700; color: var(--accent); }
 .post-nav a { display: flex; align-items: center; gap: 8px; }
 .post-nav a:hover { opacity: 0.75; }
 .post-nav svg { width: 14px; height: 14px; flex-shrink: 0; }
 
 footer { border-top: 1px solid var(--line); padding: 22px 0 60px; font-family: 'Space Mono', monospace; font-size: 13px; color: var(--ink-faint); letter-spacing: 0.04em; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
 .footer-stamp { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent); white-space: nowrap; }
-
-.preview-banner { background: var(--ink); color: var(--bg); font-family: 'Space Mono', monospace; font-size: 12px; text-align: center; padding: 8px; letter-spacing: 0.04em; }
 
 @media (max-width: 640px) {
   .post-row { grid-template-columns: 1fr; gap: 6px; }
@@ -108,8 +107,8 @@ footer { border-top: 1px solid var(--line); padding: 22px 0 60px; font-family: '
    SUPABASE CONFIG — paste your own values here.
    Find these in Supabase: Project Settings → API.
    ============================================================ */
-const SUPABASE_URL = "https://yykjbkyteuhazlrajqnk.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_cBLmW7wkdtWdtVt_ASNQHQ_i7u5mLA-";
+const SUPABASE_URL = "PASTE_YOUR_SUPABASE_PROJECT_URL_HERE";
+const SUPABASE_ANON_KEY = "PASTE_YOUR_SUPABASE_ANON_KEY_HERE";
 
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
