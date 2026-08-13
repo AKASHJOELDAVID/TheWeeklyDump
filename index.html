@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Weekly Dump</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg: #FEFEFC;
+  --ink: #1A1A18;
+  --ink-soft: #5B584F;
+  --ink-faint: #8C887C;
+  --accent: #BE7A3D;
+  --line: #E7E4DA;
+}
+* { box-sizing: border-box; }
+html, body {
+  margin: 0; padding: 0;
+  background: var(--bg); color: var(--ink);
+  font-family: 'Source Serif 4', Georgia, serif;
+}
+a { color: inherit; text-decoration: none; cursor: pointer; }
+.wrap { max-width: 900px; margin: 0 auto; padding: 0 32px; }
+
+header { border-bottom: 1px solid var(--line); }
+.nav-row { display: flex; align-items: center; justify-content: space-between; padding: 26px 0; }
+.logo { font-family: 'Playfair Display', Georgia, serif; font-weight: 700; font-size: 22px; letter-spacing: 0.03em; text-transform: uppercase; }
+.nav-links { display: flex; gap: 32px; }
+.nav-links a { font-size: 16px; padding-bottom: 4px; border-bottom: 2px solid transparent; }
+.nav-links a.active { border-bottom-color: var(--accent); }
+.nav-links a:hover:not(.active) { color: var(--ink-soft); }
+
+.page-head { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 56px 0 40px; flex-wrap: wrap; }
+.page-title { font-family: 'Playfair Display', Georgia, serif; font-weight: 700; font-size: clamp(38px, 5vw, 52px); line-height: 1.15; margin: 0; max-width: 600px; }
+.title-underline { width: 56px; height: 3px; background: var(--accent); margin-top: 18px; border: none; }
+.page-subtitle { font-size: 17px; color: var(--ink-soft); margin: 18px 0 0; max-width: 46ch; }
+.page-caption { font-family: 'Space Mono', monospace; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent); line-height: 1.8; text-align: left; white-space: nowrap; }
+
+.post-list { padding-bottom: 60px; }
+.post-row { display: grid; grid-template-columns: 150px 1fr auto; gap: 24px; align-items: start; padding: 26px 0; border-bottom: 1px solid var(--line); }
+.post-row:first-child { border-top: 1px solid var(--line); }
+.post-date { font-family: 'Space Mono', monospace; font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink-faint); padding-top: 6px; }
+.post-row-title { font-family: 'Playfair Display', Georgia, serif; font-weight: 700; font-size: 24px; margin: 0 0 8px; }
+.post-row-title a:hover { color: var(--accent); }
+.post-excerpt { font-size: 15px; color: var(--ink-soft); margin: 0; line-height: 1.55; max-width: 56ch; }
+.read-link { font-family: 'Space Mono', monospace; font-size: 13px; font-weight: 700; color: var(--accent); white-space: nowrap; padding-top: 8px; display: flex; align-items: center; gap: 6px; }
+.read-link svg { width: 14px; height: 14px; }
+
+.archive-filters { display: flex; gap: 8px; margin: 0 0 24px; }
+.archive-select {
+  font-family: 'Space Mono', monospace; font-size: 12px; background: #F4F2EC;
+  border: 1px solid var(--line); border-radius: 3px; padding: 8px 12px; color: var(--ink); cursor: pointer;
+}
+.archive-select:hover { border-color: var(--ink-faint); }
+
+.post-page { padding: 56px 0 40px; max-width: 760px; }
+.post-meta { font-family: 'Space Mono', monospace; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 18px; }
+.post-title { font-family: 'Playfair Display', Georgia, serif; font-weight: 700; font-size: clamp(32px, 4.5vw, 44px); line-height: 1.18; margin: 0 0 22px; }
+.post-lede { font-size: 18px; line-height: 1.6; color: var(--ink-soft); margin: 0 0 22px; max-width: 62ch; }
+.post-title-underline { width: 56px; height: 3px; background: var(--accent); border: none; margin: 0 0 36px; }
+.post-divider { border: none; border-top: 1px solid var(--line); margin: 0 0 36px; }
+.post-body p { font-size: 18px; line-height: 1.8; margin: 0 0 24px; max-width: 62ch; }
+.post-nav { display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--line); padding-top: 26px; margin-top: 40px; font-family: 'Space Mono', monospace; font-size: 14px; font-weight: 700; color: var(--accent); }
+.post-nav a { display: flex; align-items: center; gap: 8px; }
+.post-nav a:hover { opacity: 0.75; }
+.post-nav svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+footer { border-top: 1px solid var(--line); padding: 22px 0 60px; font-family: 'Space Mono', monospace; font-size: 13px; color: var(--ink-faint); letter-spacing: 0.04em; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.footer-stamp { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent); white-space: nowrap; }
+
+.preview-banner { background: var(--ink); color: var(--bg); font-family: 'Space Mono', monospace; font-size: 12px; text-align: center; padding: 8px; letter-spacing: 0.04em; }
+
+@media (max-width: 640px) {
+  .post-row { grid-template-columns: 1fr; gap: 6px; }
+  .read-link { padding-top: 0; }
+  .page-head { flex-direction: column; align-items: flex-start; }
+  .page-caption { text-align: left; }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div class="nav-row">
+      <div class="logo">The Weekly Dump</div>
+      <div class="nav-links">
+        <a id="nav-home">Home</a>
+        <a id="nav-archive">Archive</a>
+      </div>
+    </div>
+  </header>
+
+  <div id="app"></div>
+
+  <footer>
+    <span>the weekly dump — unpolished on purpose</span>
+    <span class="footer-stamp">made in melbourne · by ajd</span>
+  </footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+/* ============================================================
+   SUPABASE CONFIG — paste your own values here.
+   Find these in Supabase: Project Settings → API.
+   ============================================================ */
+const SUPABASE_URL = "PASTE_YOUR_SUPABASE_PROJECT_URL_HERE";
+const SUPABASE_ANON_KEY = "PASTE_YOUR_SUPABASE_ANON_KEY_HERE";
+
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+let posts = []; // populated from Supabase on load — no hardcoded dumps
+
+async function loadPosts() {
+  const { data, error } = await supabaseClient
+    .from('dumps')
+    .select('*')
+    .order('post_date', { ascending: false });
+
+  if (error) {
+    console.error('Could not load dumps:', error);
+    app.innerHTML = `<p class="post-excerpt" style="padding:56px 0;">Couldn't load dumps right now. Check the Supabase connection in the file's config.</p>`;
+    return;
+  }
+
+  posts = (data || []).map(row => ({
+    id: row.id,
+    date: new Date(row.post_date).toLocaleDateString('en-AU', { day: 'numeric', month: 'long', year: 'numeric' }),
+    title: row.title,
+    excerpt: row.excerpt,
+    body: row.body.split(/\n\s*\n/).map(p => p.trim()).filter(Boolean)
+  }));
+
+  showHome();
+}
+
+function formatLongDate(dateStr) {
+  const d = new Date(dateStr);
+  const days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+  return `${days[d.getDay()]}, ${d.getDate()} ${d.toLocaleString('default',{month:'long'})} ${d.getFullYear()}`;
+}
+function getYear(dateStr) { return new Date(dateStr).getFullYear(); }
+function getMonth(dateStr) { return new Date(dateStr).toLocaleString('default', { month: 'long' }); }
+
+const app = document.getElementById('app');
+const navHome = document.getElementById('nav-home');
+const navArchive = document.getElementById('nav-archive');
+let lastListView = 'home'; // remembers where the visitor came from, for the post page's back link
+
+function setActiveNav(view) {
+  navHome.classList.toggle('active', view === 'home');
+  navArchive.classList.toggle('active', view === 'archive');
+}
+
+function rightArrowIcon() {
+  return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>`;
+}
+function leftArrowIcon() {
+  return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>`;
+}
+
+function renderRow(p, withReadLink, fromView) {
+  const row = document.createElement('div');
+  row.className = 'post-row';
+  row.innerHTML = `
+    <div class="post-date">${p.date.toUpperCase()}</div>
+    <div>
+      <h2 class="post-row-title"><a data-id="${p.id}">${p.title}</a></h2>
+      <p class="post-excerpt">${p.excerpt}</p>
+    </div>
+    ${withReadLink ? `<a class="read-link" data-id="${p.id}">Read dump ${rightArrowIcon()}</a>` : '<span></span>'}
+  `;
+  row.querySelectorAll('[data-id]').forEach(el => el.addEventListener('click', () => showPost(Number(el.dataset.id), fromView)));
+  return row;
+}
+
+function showHome() {
+  setActiveNav('home');
+  lastListView = 'home';
+  app.innerHTML = `
+    <div class="page-head">
+      <div>
+        <h1 class="page-title">Thoughts, observations,<br>rants and things I noticed<br>this week.</h1>
+        <hr class="title-underline">
+      </div>
+      <div class="page-caption">One thought from the week.<br>Every Sunday.</div>
+    </div>
+    <div class="post-list" id="list"></div>
+  `;
+  const list = document.getElementById('list');
+  if (posts.length === 0) {
+    list.innerHTML = '<p class="post-excerpt" style="padding:26px 0;">No dumps posted yet — check back this Sunday.</p>';
+  } else {
+    posts.slice(0, 5).forEach(p => list.appendChild(renderRow(p, false, 'home')));
+  }
+  window.scrollTo(0, 0);
+}
+
+function showArchive() {
+  setActiveNav('archive');
+  lastListView = 'archive';
+  app.innerHTML = `
+    <div class="page-head">
+      <div>
+        <h1 class="page-title">All Dumps</h1>
+        <hr class="title-underline">
+        <p class="page-subtitle">Browse every weekly thought, rant and observation.</p>
+      </div>
+    </div>
+    <div class="archive-filters">
+      <select class="archive-select" id="filter-year"></select>
+      <select class="archive-select" id="filter-month"></select>
+    </div>
+    <div class="post-list" id="list"></div>
+  `;
+
+  const yearSelect = document.getElementById('filter-year');
+  const monthSelect = document.getElementById('filter-month');
+  const years = [...new Set(posts.map(p => getYear(p.date)))].sort((a,b) => b - a);
+  yearSelect.innerHTML = '<option value="all">All years</option>' + years.map(y => `<option value="${y}">${y}</option>`).join('');
+
+  const monthOrder = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+  function refreshMonths() {
+    const y = yearSelect.value;
+    const relevant = y === 'all' ? posts : posts.filter(p => String(getYear(p.date)) === y);
+    const months = [...new Set(relevant.map(p => getMonth(p.date)))].sort((a,b) => monthOrder.indexOf(b) - monthOrder.indexOf(a));
+    monthSelect.innerHTML = '<option value="all">All months</option>' + months.map(m => `<option value="${m}">${m}</option>`).join('');
+  }
+  refreshMonths();
+
+  function renderList() {
+    const list = document.getElementById('list');
+    list.innerHTML = '';
+    const y = yearSelect.value;
+    const m = monthSelect.value;
+    const filtered = posts.filter(p => {
+      const matchYear = y === 'all' || String(getYear(p.date)) === y;
+      const matchMonth = m === 'all' || getMonth(p.date) === m;
+      return matchYear && matchMonth;
+    });
+    if (posts.length === 0) {
+      list.innerHTML = '<p class="post-excerpt" style="padding:26px 0;">No dumps posted yet — check back this Sunday.</p>';
+      return;
+    }
+    if (filtered.length === 0) {
+      list.innerHTML = '<p class="post-excerpt" style="padding:26px 0;">No dumps filed for this period.</p>';
+      return;
+    }
+    filtered.forEach(p => list.appendChild(renderRow(p, true, 'archive')));
+  }
+
+  yearSelect.addEventListener('change', () => { refreshMonths(); renderList(); });
+  monthSelect.addEventListener('change', renderList);
+  renderList();
+  window.scrollTo(0, 0);
+}
+
+function showPost(id, fromView) {
+  setActiveNav(null);
+  const backView = fromView || lastListView || 'archive';
+  const index = posts.findIndex(p => p.id === id);
+  const post = posts[index] || posts[0];
+  const nextPost = posts[index - 1]; // array is newest-first, so index-1 is the following week
+
+  app.innerHTML = `
+    <div class="post-page">
+      <div class="post-meta">${formatLongDate(post.date).toUpperCase()}</div>
+      <h1 class="post-title">${post.title}</h1>
+      <p class="post-lede">${post.excerpt}</p>
+      <hr class="post-title-underline">
+      <hr class="post-divider">
+      <div class="post-body">${post.body.map(p => `<p>${p}</p>`).join('')}</div>
+      <div class="post-nav">
+        <a id="back-link">${leftArrowIcon()} Back to ${backView === 'home' ? 'home' : 'archive'}</a>
+        ${nextPost ? `<a id="next-dump">Next dump ${rightArrowIcon()}</a>` : '<span></span>'}
+      </div>
+    </div>
+  `;
+  document.getElementById('back-link').addEventListener('click', () => backView === 'home' ? showHome() : showArchive());
+  if (nextPost) document.getElementById('next-dump').addEventListener('click', () => showPost(nextPost.id, backView));
+  window.scrollTo(0, 0);
+}
+
+navHome.addEventListener('click', showHome);
+navArchive.addEventListener('click', showArchive);
+
+app.innerHTML = '<p class="post-excerpt" style="padding:56px 0;">Loading…</p>';
+loadPosts();
+</script>
+
+</body>
+</html>
