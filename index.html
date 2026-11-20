@@ -601,27 +601,7 @@ footer {
 </div>
 
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <script>
-
-/* ============================================================
-   SUPABASE CONFIG
-   ============================================================ */
-
-const SUPABASE_URL =
-  "https://yykjbkyteuhazlrajqnk.supabase.co";
-
-const SUPABASE_ANON_KEY =
-  "sb_publishable_cBLmW7wkdtWdtVt_ASNQHQ_i7u5mLA-";
-
-
-const supabaseClient =
-  window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_ANON_KEY
-  );
-
 
 let posts = [];
 
@@ -632,14 +612,15 @@ let posts = [];
 
 async function loadPosts() {
 
-  const { data, error } =
-    await supabaseClient
-      .from('dumps')
-      .select('*')
-      .order('post_date', { ascending: false });
+  let data;
 
-
-  if (error) {
+  try {
+    const response = await fetch('/api/posts');
+    if (!response.ok) {
+      throw new Error('Posts request failed: ' + response.status);
+    }
+    data = await response.json();
+  } catch (error) {
 
     console.error(
       'Could not load dumps:',
@@ -652,7 +633,6 @@ async function loadPosts() {
         style="padding:56px 0;"
       >
         Couldn't load dumps right now.
-        Check the Supabase connection in the file's config.
       </p>
     `;
 
