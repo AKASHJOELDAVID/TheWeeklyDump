@@ -642,7 +642,7 @@ async function loadPosts() {
 
   posts = (data || []).map(row => ({
 
-    id: row.id,
+    id: String(row.id),
 
     date:
       new Date(row.post_date)
@@ -887,7 +887,7 @@ function renderRow(
         'click',
         () =>
           showPost(
-            Number(el.dataset.id),
+            el.dataset.id,
             fromView
           )
       );
